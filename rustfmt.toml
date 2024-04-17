@@ -1,0 +1,4 @@
+# rustfmt.toml
+
+# 设置缩进
+tab_spaces = 2

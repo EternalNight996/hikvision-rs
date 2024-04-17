@@ -3,173 +3,247 @@
 ### 📄 [中文](README.zh.md)  | 📄  [English](../README.md)
 
 # ⚡ 这是什么?
-**这是一个通用功能库，集成了便捷功能**
+**这是海康威视Camera Rust SDK，支持通用网络摄像头、通用USB摄像头、物联网摄像头和工业摄像头（USB、网络、CamL）**
 
-### 支持 功能
-
+### 支持 SDK
 <table style="background:#000">
   <tr>
-    <th><h3 style="color:#fff">基础功能</h3></th>
-    <th><h3 style="color:#fff">Windows 10</h3></th>
-    <th><h3 style="color:#fff">Unix</h3></th>
-    <th><h3 style="color:#fff">Macos</h3></th>
+    <th><h3 style="color:#fff"><center>SDK</center></h3></th>
+    <th><h3 style="color:#fff"><center>Windows10</center></h3></th>
+    <th><h3 style="color:#fff"><center>Unix</center></h3></th>
+    <th><h3 style="color:#fff"><center>-</center></h3></th>
   </tr>
   <tr>
-    <td>Uuid</td>
-    <td><h4 style="color:green">√</h4></td>
-    <td><h4 style="color:green">√</h4></td>
-    <td><h4 style="color:green">√</h4></td>
+    <td><center>MVS</center></td>
+    <td><h4 style="color:green"><center>√</center></h4></td>
+    <td><h4 style="color:red"><center>X</center></h4></td>
+    <td><h4 style="color:#aaa"><center>工业采集接口 (USB、CamL、GigE)</center></h4></td>
   </tr>
   <tr>
-    <td>Base64</td>
-    <td><h4 style="color:green">√</h4></td>
-    <td><h4 style="color:green">√</h4></td>
-    <td><h4 style="color:green">√</h4></td>
+    <td><center>NET</center></td>
+    <td><h4 style="color:green"><center>√</center></h4></td>
+    <td><h4 style="color:red"><center>X</center></h4></td>
+    <td><h4 style="color:#aaa"><center>通用网络接口</center></h4></td>
   </tr>
   <tr>
-    <td>Algorithm</td>
-    <td><h4 style="color:green">√</h4></td>
-    <td><h4 style="color:green">√</h4></td>
-    <td><h4 style="color:green">√</h4></td>
+      <td><center>USB</center></td>
+      <td><h4 style="color:red"><center>X</center></h4></td>
+      <td><h4 style="color:red"><center>X</center></h4></td>
+      <td><h4 style="color:#aaa"><center>通用USB接口</center></h4></td>
   </tr>
   <tr>
-    <td>GUI</td>
-    <td><h4 style="color:green">√</h4></td>
-    <td><h4 style="color:red">×</h4></td>
-    <td><h4 style="color:red">×</h4></td>
-  </tr>
-  <tr>
-    <td>Image</td>
-    <td><h4 style="color:green">√</h4></td>
-    <td><h4 style="color:green">√</h4></td>
-    <td><h4 style="color:green">√</h4></td>
-  </tr>
-  <tr>
-    <td>_</td>
-    <td><h4 style="color:red">×</h4></td>
-    <td><h4 style="color:red">×</h4></td>
-    <td><h4 style="color:red">×</h4></td>
+      <td><center>OTAP</center></td>
+      <td><h4 style="color:red"><center>X</center></h4></td>
+      <td><h4 style="color:red"><center>X</center></h4></td>
+      <td><h4 style="color:#aaa"><center>物联网开放访问协议</center></h4></td>
   </tr>
 </table>
+
+### SDK Support API
+<table style="background:#000">
+  <tr>
+    <th><h3 style="color:#fff"><center>API</center></h3></th>
+    <th><h3 style="color:#fff"><center>MVS</center></h3></th>
+    <th><h3 style="color:#fff"><center>NET</center></h3></th>
+    <th><h3 style="color:#fff"><center>USB</center></h3></th>
+    <th><h3 style="color:#fff"><center>OTAP</center></h3></th>
+    <th><h3 style="color:#fff"><center>-</center></h3></th>
+  </tr>
+  <tr>
+    <td><center>Init SDK</center></td>
+    <td><h4 style="color:green"><center>√</center></h4></td>
+    <td><h4 style="color:green"><center>√</center></h4></td>
+    <td><h4 style="color:white"><center>-</center></h4></td>
+    <td><h4 style="color:white"><center>-</center></h4></td>
+    <td><h4 style="color:#aaa"><center>初始化SDK</center></h4></td>
+  </tr>
+  <tr>
+    <td><center>Enumerate</center></td>
+    <td><h4 style="color:green"><center>√</center></h4></td>
+    <td><h4 style="color:red"><center>X</center></h4></td>
+    <td><h4 style="color:white"><center>-</center></h4></td>
+    <td><h4 style="color:white"><center>-</center></h4></td>
+    <td><h4 style="color:#aaa"><center>枚举设备</center></h4></td>
+  </tr>
+  <tr>
+    <td><center>Login</center></td>
+    <td><h4 style="color:white"><center>-</center></h4></td>
+    <td><h4 style="color:green"><center>√</center></h4></td>
+    <td><h4 style="color:white"><center>-</center></h4></td>
+    <td><h4 style="color:white"><center>-</center></h4></td>
+    <td><h4 style="color:#aaa"><center>登录设备</center></h4></td>
+  </tr>
+  <tr>
+    <td><center>Open</center></td>
+    <td><h4 style="color:green"><center>√</center></h4></td>
+    <td><h4 style="color:white"><center>-</center></h4></td>
+    <td><h4 style="color:white"><center>-</center></h4></td>
+    <td><h4 style="color:white"><center>-</center></h4></td>
+    <td><h4 style="color:#aaa"><center>打开设备</center></h4></td>
+  </tr>
+  <tr>
+    <td><center>Handle</center></td>
+    <td><h4 style="color:green"><center>√</center></h4></td>
+    <td><h4 style="color:green"><center>√</center></h4></td>
+    <td><h4 style="color:white"><center>-</center></h4></td>
+    <td><h4 style="color:white"><center>-</center></h4></td>
+    <td><h4 style="color:#aaa"><center>创建句柄</center></h4></td>
+  </tr>
+  <tr>
+    <td><center>Log</center></td>
+    <td><h4 style="color:green"><center>√</center></h4></td>
+    <td><h4 style="color:green"><center>√</center></h4></td>
+    <td><h4 style="color:white"><center>-</center></h4></td>
+    <td><h4 style="color:white"><center>-</center></h4></td>
+    <td><h4 style="color:#aaa"><center>日志输出</center></h4></td>
+  </tr>
+  <tr>
+    <td><center>Clean SDK</center></td>
+    <td><h4 style="color:green"><center>√</center></h4></td>
+    <td><h4 style="color:green"><center>√</center></h4></td>
+    <td><h4 style="color:white"><center>-</center></h4></td>
+    <td><h4 style="color:white"><center>-</center></h4></td>
+    <td><h4 style="color:#aaa"><center>清理SDK</center></h4></td>
+  </tr>
+  <tr>
+    <td><center>Clean All</center></td>
+    <td><h4 style="color:green"><center>√</center></h4></td>
+    <td><h4 style="color:green"><center>√</center></h4></td>
+    <td><h4 style="color:white"><center>-</center></h4></td>
+    <td><h4 style="color:white"><center>-</center></h4></td>
+    <td><h4 style="color:#aaa"><center>清理所有</center></h4></td>
+  </tr>
+  <tr>
+    <td><center>Destroy All</center></td>
+    <td><h4 style="color:green"><center>√</center></h4></td>
+    <td><h4 style="color:green"><center>√</center></h4></td>
+    <td><h4 style="color:white"><center>-</center></h4></td>
+    <td><h4 style="color:white"><center>-</center></h4></td>
+    <td><h4 style="color:#aaa"><center>销毁</center></h4></td>
+  </tr>
+  <tr>
+    <td><center>Callback Sream</center></td>
+    <td><h4 style="color:green"><center>√</center></h4></td>
+    <td><h4 style="color:green"><center>√</center></h4></td>
+    <td><h4 style="color:white"><center>-</center></h4></td>
+    <td><h4 style="color:white"><center>-</center></h4></td>
+    <td><h4 style="color:#aaa"><center>回调数据流</center></h4></td>
+  </tr>
+  <tr>
+    <td><center>Sream</center></td>
+    <td><h4 style="color:green"><center>√</center></h4></td>
+    <td><h4 style="color:green"><center>√</center></h4></td>
+    <td><h4 style="color:white"><center>-</center></h4></td>
+    <td><h4 style="color:white"><center>-</center></h4></td>
+    <td><h4 style="color:#aaa"><center>数据流</center></h4></td>
+  </tr>
+  <tr>
+    <td><center>Fix Network</center></td>
+    <td><h4 style="color:green"><center>√</center></h4></td>
+    <td><h4 style="color:red"><center>X</center></h4></td>
+    <td><h4 style="color:white"><center>-</center></h4></td>
+    <td><h4 style="color:white"><center>-</center></h4></td>
+    <td><h4 style="color:#aaa"><center>自适应网络传输大小</center></h4></td>
+  </tr>
+  <tr>
+    <td><center>Preview</center></td>
+    <td><h4 style="color:green"><center>√</center></h4></td>
+    <td><h4 style="color:green"><center>√</center></h4></td>
+    <td><h4 style="color:white"><center>-</center></h4></td>
+    <td><h4 style="color:white"><center>-</center></h4></td>
+    <td><h4 style="color:#aaa"><center>预览图像</center></h4></td>
+  </tr>
+  <tr>
+    <td><center>Capture Image</center></td>
+    <td><h4 style="color:green"><center>√</center></h4></td>
+    <td><h4 style="color:green"><center>√</center></h4></td>
+    <td><h4 style="color:white"><center>-</center></h4></td>
+    <td><h4 style="color:white"><center>-</center></h4></td>
+    <td><h4 style="color:#aaa"><center>抓图</center></h4></td>
+  </tr>
+  </tr>
+  <tr>
+    <td><center>Save JPEG</center></td>
+    <td><h4 style="color:green"><center>√</center></h4></td>
+    <td><h4 style="color:green"><center>√</center></h4></td>
+    <td><h4 style="color:white"><center>-</center></h4></td>
+    <td><h4 style="color:white"><center>-</center></h4></td>
+    <td><h4 style="color:#aaa"><center>存储JPEG格式</center></h4></td>
+  </tr>
+  <tr>
+    <td><center>GUI</center></td>
+    <td><h4 style="color:green"><center>√</center></h4></td>
+    <td><h4 style="color:green"><center>√</center></h4></td>
+    <td><h4 style="color:white"><center>-</center></h4></td>
+    <td><h4 style="color:white"><center>-</center></h4></td>
+    <td><h4 style="color:#aaa"><center>图形化图像界面</center></h4></td>
+  </tr>
+</table>
+
+
 
 # ✨ 分支
 ```toml
 [features]
-std = []
-alloc = []
-fs = []
-uuid_v4 = ["uuid/v4", "uuid/fast-rng", "uuid/macro-diagnostics", "uuid"]
-base64 = []
-algorithm = ["rand"]
-ui = ["e-macros"]
-macros = ["e-macros"]
-images = ["image"]
-http = ["reqwest"]
-http-blocking = ["reqwest/blocking"]
-http-json = ["reqwest/json"]
-default = ["std"]
+net = []
+mvs = []
+default = []
 ```
 
 # 📖 示例
 ```toml
 [dependencies]
-e-utils = {version="0.3.0", feature=["algorithm"]}
+hikvision = {version="0.1", feature=["mvs","net"]}
 ```
 
-```Rust
- // Exmaple `Nanoid`
- fn main() {
-     use e_utils::algorithm;
-     println!("nanoid -> {}", algorithm!(nanoid));
-     println!("nanoid 16bytes -> {}", algorithm!(nanoid 16));
-     println!("nanoid 16bytes -> {}", algorithm!(nanoid 16));
-     println!("nanoid 10bytes [alphabet:expr] -> {}", algorithm!(nanoid 16, &['1', 'b', 'c', '7']));
-     println!("nanoid unsafe 10bytes -> {}", algorithm!(nanoid unsafe 10));
-     println!("nanoid unsafe 10bytes [alphabet:expr]-> {}", algorithm!(nanoid unsafe 10, &['1','0']));
- }
- // Exmaple `algorithm`
- fn main2() {
-    use e_utils::algorithm;
-    println!("random bool -> {}", algorithm!());
-    println!("random type -> {}", algorithm!(#u32));
-    println!("random type[] -> {:?}", algorithm!([u32; 10]));
-    println!("random range 0-13 -> {}", algorithm!(13));
-    println!("random range -> {}", algorithm!(0i32..13));
-    println!("random rgb range -> {:?}", algorithm!(rgb 100,255));
- }
-```
+### Examples
+[初始化 Mvs SDK](examples/global_mvs.rs) | [初始化 Net SDK](examples/global_net.rs) 
 
-```toml
-[dependencies]
-e-utils = {version="0.3.0", feature=["algorithm","images"]}
-```
-
-### 示例把内存中的图像提取出来并转换成base64
-```Rust
-use std::path::PathBuf;
-use e_utils::{
-  algorithm,
-  images::ImageSource,
-  parse::{AutoPath as _, ParseResult as _},
-  Result,
-};
-use serde_json::{json, Value};
-use super::{SnPicture, Store};
-
-/// 处理图像数据
-pub fn store_save_image<T>(
-  pic_buf_ptr: *const T,
-  buf_size: usize,
-  cache_dir: PathBuf,
-  store: &Store,
-) -> Result<Value> {
-  // 从内存中获取数据
-  let reader = unsafe { ImageSource::from_raw_parts_reader(pic_buf_ptr, buf_size) }?;
-  let iformat = reader.format().res()?;
-  let suffix = iformat.extensions_str();
-  let mime_type = iformat.to_mime_type();
-  let image = reader.decode().map_err(|e| e.to_string())?;
-  let nanoid = algorithm!(nanoid 12);
-
-  cache_dir.auto_create_dir()?;
-  let fpath = cache_dir.join(format!("{nanoid}.{}", suffix[0]));
-  image
-    .save_with_format(&fpath, iformat)
-    .map_err(|e| e.to_string())?;
-  let base64_str = ImageSource::image_to_base64(&image, iformat)?;
-  let data = Value::String(format!("data:{mime_type};base64,{}", base64_str));
-  let id = format!("image:{nanoid}");
-
-  let _ = store.lock().res()?.insert(
-    id.clone(),
-    serde_json::to_value(&SnPicture {
-      fpath,
-      suffix: suffix[0].to_string(),
-      mime_type: mime_type.to_string(),
-    })?,
-  );
-  Ok(json!({"key": id, "value": data}))
-}
-```
 
 ## `💡!重要：`
 #### xxx
-<!-- 您必须使用使用MSVC工具链的Rust版本
-您必须安装[WinPcap](https://www.winpcap.org/)或[npcap](https://nmap.org/npcap/)（使用[WinPcap](https://www.winpcap.org/) 4.1.3版进行测试）（如果使用[npcap](https://nmap.org/npcap/)，请确保使用“在[WinPcap](https://www.winpcap.org/) API兼容模式下安装[npcap](https://nmap.org/npcap/)”）
-你必须把它放在包里。[WinPcap](https://www.winpcap.org/)开发者包中的lib位于该存储库根目录中名为lib的目录中。或者，您可以使用%LIB%/$Env:LIB环境变量中列出的任何位置。对于64位工具链，它位于WpdPack/Lib/x64/Packet中。对于32位工具链，它位于WpdPack/lib/Packet.lib中。
+1. [Env.json](Examples/Env.json) **环境变量; `{origin}` 是特殊的关键词，记录原始目录**
+```json
+{
+  "envs": [
+    {
+      "key": "HCNET_LIB",
+      "value": "{origin}/libs/HCNet/lib"
+    },
+    {
+      "key": "HCNET_COM_LIB",
+      "value": "{origin}/libs/HCNet/lib/HCNetSDKCom"
+    },
+    {
+      "key": "HCMVS_LIB",
+      "value": "{origin}/libs/HCMvs/Win64_x64"
+    }
+  ]
+}
 ```
-# 1.安装npcap服务 https://npcap.com/dist/npcap-1.70.exe
-setx LIB E:\libs\LIB
-# 下载并解压 https://npcap.com/dist/npcap-sdk-1.13.zip
-# 将npcap-sdk-1.13\Lib\x64\Packet.lib放到E:\libs\LIB
-``` -->
+
+1. 添加海康威视摄像头的链接库到hikvision-rs
+```sh
+# 把链接库放到 libs/HCMvs 或 libs/HCNet 
+cargo run --example global_mvs
+cargo run --example global_net
+```
+
+1. 添加SDK Cargo.toml 
+```toml
+[dependencies]
+hikvision = {version="0.1", feature=["mvs","net"]}
+```
+
 
 # 🚀 快速运行
-<!-- ```sh
-# 主机/端口扫描
-cargo run --example host_scan
-cargo run --example port_scan
-``` -->
+```sh
+# test global mvs init sdk
+cargo run --example global_mvs
+
+# test global net init sdk
+cargo run --example global_net
+```
 
 
 # 🦊 已运用项目

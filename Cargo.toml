@@ -6,8 +6,8 @@ crate-type = ["rlib"]
 proc-macro = false
 
 [features]
-net_sdk = []
-mvs_sdk = []
+net = []
+mvs = []
 default = []
 
 [dependencies]

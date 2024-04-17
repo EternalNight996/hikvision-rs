@@ -23,16 +23,6 @@ lazy_static! {
   pub static ref HC_MVS_CORE_SDK: Arc<RwLock<HcMvsCoreSdk>> =
     Arc::new(RwLock::new(HcMvsCoreSdk::default()));
 }
-lazy_static! {
-  // Global NET Camera sdk
-  pub static ref HC_NET_CORE_SDK: Arc<RwLock<HcNetCoreSdk>> =
-    Arc::new(RwLock::new(HcNetCoreSdk::default()));
-}
-lazy_static! {
-  // Global NET Play Camera sdk
-  pub static ref HC_NET_PLAY_CORE_SDK: Arc<RwLock<HcNetPlayCoreSdk>> =
-    Arc::new(RwLock::new(HcNetPlayCoreSdk::default()));
-}
 
 fn main() -> Result<()> {
     e_utils::system::init_original_dir()?;
@@ -42,14 +32,6 @@ fn main() -> Result<()> {
     HC_MVS_CORE_SDK.read().res()?.lib();
     HC_MVS_CORE_SDK.write().res()?.free().unwrap();
     println!("MVS SDK OK");
-    let log_folder = cf.get_camera_log_folder()?;
-    init_net_sdk(log_folder, HcnetLevel::InfoDE)?;
-    HC_NET_CORE_SDK.read().res()?.lib();
-    HC_NET_CORE_SDK.write().res()?.free().unwrap();
-    println!("NET SDK OK");
-    HC_NET_PLAY_CORE_SDK.read().res()?.lib();
-    HC_NET_PLAY_CORE_SDK.write().res()?.free().unwrap();
-    println!("NET PLAY SDK OK");
     Ok(())
 }
 

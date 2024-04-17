@@ -20,6 +20,8 @@
 #![cfg_attr(docsrs, allow(unused_attributes))]
 #![cfg_attr(loom, allow(dead_code, unreachable_pub))]
 
+/// Core
 pub mod core;
 pub use core::*;
+/// Utils
 pub mod utils;

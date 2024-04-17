@@ -12,9 +12,11 @@ where
 }
 
 /// LIB
-#[derive(Default)]
+#[derive(Default, Debug)]
 pub struct Lib {
+  /// Lib path
   lib_path: PathBuf,
+  /// Lib
   lib: Option<Library>,
 }
 unsafe impl Send for Lib {}
@@ -44,6 +46,13 @@ impl Lib {
     self
       .lib
       .as_ref()
+      .expect(&format!("{} 链接库无法找到", self.lib_path.display(),))
+  }
+  /// 强制解包可变
+  pub fn get_mut(&mut self) -> &mut Library {
+    self
+      .lib
+      .as_mut()
       .expect(&format!("{} 链接库无法找到", self.lib_path.display(),))
   }
   /// 获取路径

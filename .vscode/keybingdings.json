@@ -1,0 +1,42 @@
+[
+  {
+    "key": "j",
+    "command": "selectNextSuggestion",
+    "when": "suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus"
+  },
+  {
+    "key": "k",
+    "command": "selectPrevSuggestion",
+    "when": "suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus"
+  },
+  {
+    "key": "u",
+    "command": "undo",
+    "when": "vim.mode == 'Normal'"
+  },
+  {
+    "key": "/",
+    "command": "hideSuggestWidget",
+    "when": "suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus"
+  },
+  {
+    "key": "ctrl+r",
+    "command": "rust-analyzer.run",
+    "when": "editorLangId == rust"
+  },
+  {
+    "key": "ctrl+r",
+    "command": "python.execInDedicatedTerminal",
+    "when": "editorLangId == python"
+  },
+  {
+    "key": "ctrl+r",
+    "command": "xmake.onBuildRun",
+    "when": "editorLangId == cpp"
+  },
+  {
+    "key": "ctrl+alt+d",
+    "command": "rust-analyzer.openDocs",
+    "when": "inRustProject"
+  }
+]

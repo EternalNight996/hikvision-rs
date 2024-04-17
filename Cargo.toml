@@ -1,0 +1,38 @@
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[lib]
+# 设置 crate 类型，有三个选项：`rlib` (Rust library)，`dylib` (dynamic library)，`cdylib` (C-compatible dynamic library)
+# 默认是 `rlib`
+crate-type = ["rlib"]
+proc-macro = false
+
+[features]
+net_sdk = []
+mvs_sdk = []
+default = []
+
+[dependencies]
+serde_json = "1.0"
+serde = { version = "1.0", features = ["derive"] }
+libloading = "^0.8.1"
+e-utils = { version = "0.3", features = ["algorithm", "macros", "ui"] }
+# e-log = { version = "0.1", default-features = false, features = ["std"] }
+
+[package]
+name = "hikvision"
+version = "0.1.0"
+description = "A rust hikvision sdk"
+edition = "2021"
+rust-version = "1.76.0"
+homepage = "https://gitee.com/eternalnight996"
+license-file = "MIT-LICENSE"
+readme = "README.md"
+documentation = "https://docs.rs/hikvision-rs"
+repository = "https://gitee.com/eternalnight996/hikvision-rs"
+include = ["src/", "*.md", "*-LICENSE", "Cargo.toml"]
+keywords = ["hikvision", "camera", "mvs", "network", "e-"]
+categories = []
+
+[package.metadata.docs.rs]
+# RUSTDOCFLAGS="--cfg doc_cfg" cargo +nightly doc --all-features --no-deps --open
+rustdoc-args = ["--cfg", "doc_cfg"]
+all-features = true

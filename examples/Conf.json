@@ -1,0 +1,114 @@
+{
+  "package": {
+    "productName": "heg-record-camera",
+    "version": "0.1.0"
+  },
+  "window": {
+    "theme": "Mask",
+    "ui": {
+      "title": "#name#-#version#",
+      "className": "#name#",
+      "x": 0,
+      "y": 0,
+      "width": 1024,
+      "height": 600
+    }
+  },
+  "log": {
+    "level": "Debug",
+    "folder": "{origin}/#name#-#version#/logs/{date}",
+    "fname": "#name#.log",
+    "format": "{level}{target}{file}{line}{thread-ids}{thread-names}",
+    "outputList": [
+      "folder",
+      "stdout",
+      "webview"
+    ]
+  },
+  "cpu": {
+    "core": 4
+  },
+  "camera": {
+    "ui": {
+      "title": "机内检查-#version#",
+      "className": "#name#-mii",
+      "x": 0,
+      "y": 0,
+      "width": 400,
+      "height": 350
+    },
+    "loginInfo": {
+      "host": "10.10.6.23",
+      "port": 8000,
+      "uname": "admin",
+      "passwd": "admin123",
+      "protocal": "Hikvision"
+    },
+    "logDir": "{origin}/#name#-#version#/hik-logs/{date}",
+    "cacheDir": "{origin}/#name#-#version#/cache/{date}",
+    "autoCapture": true,
+    "apiType": "HikMvs",
+    "mvs": {
+      "quality": 60,
+      "imageType": 2,
+      "methodValue": 0,
+      "mSec": 3000
+    },
+    "net": {
+      "bufSize": 10485760,
+      "maxCache": 100
+    }
+  },
+  "bios": {
+    "snRule": "",
+    "snLen": 29,
+    "boardSnRule": "B",
+    "boardSnLen": 17
+  },
+  "storage": {
+    "type": "Local",
+    "local": {
+      "dirname": "{origin}/#name#-#version#/storage/{date}",
+      "fname": "",
+      "prefix": "MII-",
+      "uploadType": "Replace"
+    },
+    "ftp": {
+      "loginInfo": {
+        "host": "192.168.127.7",
+        "port": 21,
+        "uname": "ftpdata",
+        "passwd": "F%0D@ta"
+      },
+      "remote": {
+        "dirname": "#name#-#version#/storage/{date}",
+        "fname": "",
+        "prefix": "MII-",
+        "uploadType": "Replace"
+      }
+    }
+  },
+  "tools": {
+    "mes": {
+      "MESSettings": {
+        "StationName": "PC机内点检",
+        "ProdUrl": "heg-pc-cmesprod.gz.cvte.cn",
+        "SysUrl": "heg-pc-cmessys.gz.cvte.cn",
+        "TokenName": "cmes_heg_info",
+        "UserName": "f_00000006@heg-pc.com",
+        "PassWord": "123qweASD",
+        "CauseNo": "HG",
+        "WorkCenter": "PC01",
+        "TestFrameidNo": "MOD02",
+        "WksNo": "ZS360"
+      },
+      "key": "MESSettings",
+      "enable": true,
+      "ignores": [
+        "OK",
+        "最后扫描工步",
+        "请扫描下一工步"
+      ]
+    }
+  }
+}

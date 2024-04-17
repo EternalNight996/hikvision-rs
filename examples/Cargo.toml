@@ -20,5 +20,5 @@ name = "global_mvs"
 path = "global_mvs.rs"
 
 [[example]]
-name = "global_mvs"
-path = "global_mvs.rs"
+name = "global_net"
+path = "global_net.rs"

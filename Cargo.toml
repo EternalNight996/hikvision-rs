@@ -15,7 +15,6 @@ serde_json = "1.0"
 serde = { version = "1.0", features = ["derive"] }
 libloading = "^0.8.1"
 e-utils = { version = "0.3", features = ["algorithm", "macros", "ui"] }
-# e-log = { version = "0.1", default-features = false, features = ["std"] }
 
 [package]
 name = "hikvision"

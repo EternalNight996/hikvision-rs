@@ -1,6 +1,7 @@
 <img src="public/ico/white_64x64.ico" alt="hikvision-rs"/>
 
 ### 📄 [中文](docs/README.zh.md)  | 📄  [English](README.md)
+[Github](https://github.com/EternalNight996/hikvision-rs) | [Gitee](https://gitee.com/eternalnight996/hikvision-rs) | [crates.io](https://crates.io/crates/hikvision) | [Rust Doc](https://docs.rs/hikvision/0.1.6/hikvision/)
 
 # ⚡ what this ?
 **This is the Hikvision Camera Rust SDK, which supports universal network cameras, universal USB cameras, IoT cameras, and industrial cameras (USB, network, CamL)**
@@ -240,7 +241,9 @@ cargo run --example global_net
 ```
 
 # 🦊 Applied Projects
-<!-- [E-NetScan](https://github.com/EternalNight996/e-netscan.git): The network scanning project (which supports both command line and cross platform graphical interface) is under development.. -->
+### A graphical project developed through hikvision-rs;
+### Capture images through Hikvision cameras, upload logs and images to the MES system
+![test](./public/png/1.png)
 
 # 🔭 why need to hikvision-rs?
 <!-- At first, I wanted to complete a cross network scanning project to help me complete some work. I referred to many open source projects, but these projects have some defects that do not meet my needs, so I have e-libscanner.

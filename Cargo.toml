@@ -18,7 +18,7 @@ e-utils = { version = "0.3", features = ["algorithm", "macros", "ui"] }
 
 [package]
 name = "hikvision"
-version = "0.1.0"
+version = "0.1.1"
 description = "A rust hikvision sdk"
 edition = "2021"
 rust-version = "1.76.0"

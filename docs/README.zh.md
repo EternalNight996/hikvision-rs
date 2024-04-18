@@ -1,4 +1,4 @@
-<img src="../public/ico/white_64x64.ico" alt="e-utils"/>
+<img src="../public/ico/white_64x64.ico" alt="hikvision-rs"/>
 
 ### 📄 [中文](README.zh.md)  | 📄  [English](../README.md)
 

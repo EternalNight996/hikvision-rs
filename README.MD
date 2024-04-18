@@ -1,3 +1,4 @@
+<img src="public/ico/white_64x64.ico" alt="hikvision-rs"/>
 
 ### 📄 [中文](docs/README.zh.md)  | 📄  [English](README.md)
 

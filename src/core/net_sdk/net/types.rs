@@ -1,6 +1,5 @@
 #![allow(non_snake_case)]
 
-use e_utils::ui::HWND;
 use e_utils::{
   cstring_to_array, empty_to_array,
   parse::{AutoParse as _, ParseResult as _},
@@ -402,10 +401,10 @@ pub struct NetDvrPreviewInfo {
   /// 0：TCP方式,1：UDP方式,2：多播方式,3 - RTP方式，4-RTP/RTSP,5-RSTP/HTTP ,6- HRUDP（可靠传输） ,7-RTSP/HTTPS
   pub dwLinkMode: c_ulong,
   /// 播放窗口的句柄,为NULL表示不播放图象
-  #[serde(with = "e_utils::parse::hwnd_serializer")]
-  pub hPlayWnd: HWND,
-  // #[serde(with = "e_utils::parse::raw_pointer_serializer")]
-  // pub hPlayWnd: *mut c_void,
+  // #[serde(with = "e_utils::parse::hwnd_serializer")]
+  // pub hPlayWnd: e_utils::ui::HWND,
+  #[serde(with = "e_utils::parse::raw_pointer_serializer")]
+  pub hPlayWnd: *mut c_void,
   /// 0-非阻塞取流, 1-阻塞取流, 如果阻塞SDK内部connect失败将会有5s的超时才能够返回,不适合于轮询取流操作
   pub bBlocked: bool,
   /// 0-不启用录像回传,1启用录像回传

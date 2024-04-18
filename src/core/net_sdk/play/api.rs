@@ -1,7 +1,6 @@
 use e_utils::{
   auto_any_res_c,
   parse::{AutoParse as _, CAutoParse},
-  ui::{HWND, RECT},
   CResult,
 };
 use libloading::{Library, Symbol};
@@ -11,17 +10,20 @@ use super::{PlayM4LastError, PlayStreamOpenMode};
 use crate::net_sdk::play::DecCBFunWin;
 use crate::Lib;
 
+///
 #[repr(C)]
-#[derive(Default)]
+#[derive(Default, Debug)]
 pub struct HcNetPlayCoreSdk {
+  /// 句柄
   handle: c_long,
+  /// lib
   lib: Lib,
 }
 unsafe impl Send for HcNetPlayCoreSdk {}
 unsafe impl Sync for HcNetPlayCoreSdk {}
 
 impl HcNetPlayCoreSdk {
-  //// 设置LIB
+  /// 设置LIB
   pub fn set_lib(&mut self, lib: Lib) {
     self.lib = lib;
   }
@@ -115,9 +117,10 @@ impl HcNetPlayCoreSdk {
   /// [in] 流数据缓冲区地址
   /// nSize
   /// [in] 流数据缓冲区大小
-  pub unsafe extern "C" fn start(&self, hwnd: HWND) -> CResult<bool> {
+  #[cfg(target_os = "windows")]
+  pub unsafe extern "C" fn start(&self, hwnd: e_utils::ui::HWND) -> CResult<bool> {
     // # 开始解码播放
-    let func: Symbol<'_, unsafe extern "C" fn(nPort: c_long, hWnd: HWND) -> bool> =
+    let func: Symbol<'_, unsafe extern "C" fn(nPort: c_long, hWnd: e_utils::ui::HWND) -> bool> =
       auto_any_res_c!(self.lib().get(b"PlayM4_Play\0"));
     let res = func(self.handle, hwnd);
     CResult::Ok(res)
@@ -133,11 +136,12 @@ impl HcNetPlayCoreSdk {
   /// [in] 设置显示窗口。如果该区域的窗口已经设置过（打开过），那么该参数被忽略
   /// bEnable
   /// [in] 打开（设置）或关闭显示区域
+  #[cfg(target_os = "windows")]
   pub unsafe extern "C" fn set_display_region(
     &self,
     region_num: c_uint,
-    src_rect: *const RECT,
-    hwnd: HWND,
+    src_rect: *const e_utils::ui::RECT,
+    hwnd: e_utils::ui::HWND,
     enable: bool,
   ) -> CResult<bool> {
     // # 开始解码播放
@@ -146,8 +150,8 @@ impl HcNetPlayCoreSdk {
       unsafe extern "C" fn(
         nPort: c_long,
         nRegionNum: c_uint,
-        pSrcRect: *const RECT,
-        hDestWnd: HWND,
+        pSrcRect: *const e_utils::ui::RECT,
+        hDestWnd: e_utils::ui::HWND,
         bEnable: bool,
       ) -> bool,
     > = auto_any_res_c!(self.lib().get(b"PlayM4_SetDisplayRegion\0"));

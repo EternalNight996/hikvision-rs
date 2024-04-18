@@ -9,7 +9,9 @@ use std::ffi::*;
 #[repr(C)]
 #[derive(Deserialize, Serialize, Debug, e_utils::C, e_utils::Json)]
 pub struct PlayM4LastError {
+  ///
   pub code: c_ushort,
+  ///
   #[serde(with = "e_utils::parse::c_str_pointer_serializer")]
   pub msg: *const c_char,
 }
@@ -21,7 +23,7 @@ impl Default for PlayM4LastError {
     }
   }
 }
-// 定义预览参数结构体
+/// 定义预览参数结构体
 #[repr(C)]
 #[derive(Deserialize, Serialize, Debug)]
 pub struct FrameInfo {
@@ -33,7 +35,7 @@ pub struct FrameInfo {
   pub dwFrameNum: c_uint,
 }
 
-// 解码回调函数类型定义
+/// 解码回调函数类型定义
 pub type DecCBFunWin = extern "C" fn(
   nPort: c_long,
   pBuf: *const c_char,

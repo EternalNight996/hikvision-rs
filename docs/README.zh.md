@@ -187,13 +187,14 @@
 [features]
 net = []
 mvs = []
+ui = ["e-utils/ui"]
 default = []
 ```
 
 # 📖 示例
 ```toml
 [dependencies]
-hikvision = {version="0.1", feature=["mvs","net"]}
+hikvision = {version="0.1", feature=["mvs","net","ui"]}
 ```
 
 ### Examples

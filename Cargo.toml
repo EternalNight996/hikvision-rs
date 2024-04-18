@@ -8,17 +8,18 @@ proc-macro = false
 [features]
 net = []
 mvs = []
-default = ["net", "mvs"]
+ui = ["e-utils/ui"]
+default = []
 
 [dependencies]
 serde_json = "1.0"
 serde = { version = "1.0", features = ["derive"] }
 libloading = "^0.8.3"
-e-utils = { version = "0.3", features = ["algorithm", "macros", "ui"] }
+e-utils = { version = "0.3", features = ["algorithm", "macros"] }
 
 [package]
 name = "hikvision"
-version = "0.1.5"
+version = "0.1.6"
 description = "A rust hikvision sdk"
 edition = "2021"
 rust-version = "1.76.0"

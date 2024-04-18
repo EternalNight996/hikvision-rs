@@ -1,7 +1,7 @@
 <img src="public/ico/white_64x64.ico" alt="hikvision-rs"/>
 
 ### 📄 [中文](docs/README.zh.md)  | 📄  [English](README.md)
-[Github](https://github.com/EternalNight996/hikvision-rs) | [Gitee](https://gitee.com/eternalnight996/hikvision-rs) | [crates.io](https://crates.io/crates/hikvision) | [Rust Doc](https://docs.rs/hikvision/0.1.6/hikvision/)
+[Github](https://github.com/EternalNight996/hikvision-rs) | [Gitee](https://gitee.com/eternalnight996/hikvision-rs) | [crates.io](https://crates.io/crates/hikvision) | [Rust Doc](https://docs.rs/hikvision/0.1.6/hikvision/) 
 
 # ⚡ what this ?
 **This is the Hikvision Camera Rust SDK, which supports universal network cameras, universal USB cameras, IoT cameras, and industrial cameras (USB, network, CamL)**

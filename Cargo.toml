@@ -18,7 +18,7 @@ e-utils = { version = "0.3", features = ["algorithm", "macros", "ui"] }
 
 [package]
 name = "hikvision"
-version = "0.1.1"
+version = "0.1.2"
 description = "A rust hikvision sdk"
 edition = "2021"
 rust-version = "1.76.0"
@@ -29,7 +29,7 @@ documentation = "https://docs.rs/hikvision-rs"
 repository = "https://gitee.com/eternalnight996/hikvision-rs"
 include = ["src/", "*.md", "*-LICENSE", "Cargo.toml"]
 keywords = ["hikvision", "camera", "mvs", "network", "e-"]
-categories = ["hardware-support"]
+categories = []
 
 [package.metadata.docs.rs]
 # RUSTDOCFLAGS="--cfg doc_cfg" cargo +nightly doc --all-features --no-deps --open

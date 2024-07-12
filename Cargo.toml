@@ -17,10 +17,24 @@ serde = { version = "1.0", features = ["derive"] }
 libloading = "^0.8.3"
 e-utils = { version = "0.3", features = ["algorithm", "macros"] }
 
+[dev-dependencies]
+e-log = { version = "0.1", default-features = false, features = ["_tauri"] }
+lazy_static = "1.4.0"
+hikvision = { version = "0.1", path = "./", features = ["mvs", "net", "ui"] }
+
+
+[[example]]
+name = "global_mvs"
+path = "examples/global_mvs.rs"
+
+[[example]]
+name = "global_net"
+path = "examples/global_net.rs"
+
 [package]
 name = "hikvision"
-version = "0.1.7"
-description = "A rust hikvision sdk"
+version = "0.1.8"
+description = "A rust hikvision sdk; 海康威视 RUST SDK"
 edition = "2021"
 rust-version = "1.76.0"
 homepage = "https://gitee.com/eternalnight996"

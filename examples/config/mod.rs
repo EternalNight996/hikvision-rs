@@ -333,6 +333,7 @@ impl Config {
       self.conf.log.level,
       self.conf.log.format.clone(),
       self.conf.log.output_list.clone(),
+      vec![],
     )?;
     Ok(log)
   }

@@ -4,14 +4,16 @@ use e_utils::{auto_any_res_c, CResult};
 use libloading::{Library, Symbol};
 use std::{ffi::*, ptr};
 
+/// 核心SDK
 #[repr(C)]
+#[derive(Debug)]
 pub struct HcMvsCoreSdk {
   handle: *mut c_void,
   lib: Lib,
   devlist: MvCcDeviceInfoList,
 }
 impl HcMvsCoreSdk {
-  //// 设置LIB
+  /// 设置LIB
   pub fn set_lib(&mut self, lib: Lib) {
     self.lib = lib;
   }
@@ -632,5 +634,36 @@ impl HcMvsCoreSdk {
       ) -> c_int,
     > = auto_any_res_c!(self.lib().get(b"MV_CC_GetOneFrameTimeout\0"));
     CResult::Ok(func(self.handle, data, data_size, frame_info, timeout))
+  }
+  /// # 获取自动曝光模式
+  /// ```
+  /// 参数
+  /// handle [IN] 相机句柄  
+  /// pstValue [IN][OUT] 返回给调用者的有关自动曝光模式的信息结构体指针  
+  /// 备注
+  ///  • 可参照接口 MV_CC_GetPixelFormat() ，参考 CameraParams.h 中的::MV_CAM_EXPOSURE_AUTO_MODE 定义
+  /// ```
+  pub unsafe extern "C" fn set_exposure_auto_mode(
+    &self,
+    value: MvCamExposureMode,
+  ) -> CResult<c_int> {
+    let func: Symbol<
+      '_,
+      unsafe extern "C" fn(handle: *const c_void, pValue: *const c_uint) -> c_int,
+    > = auto_any_res_c!(self.lib().get(b"MV_CC_SetExposureAutoMode\0"));
+    CResult::Ok(func(self.handle, value as c_uint as *const c_uint))
+  }
+  /// # 设置增益模式
+  /// ```
+  /// 参数
+  /// handle [IN] 相机句柄  
+  /// nValue [IN] 要设置的增益模式对应的整型值  
+  /// ```
+  pub unsafe extern "C" fn set_gain_mode(&self, value: MvCamGainMode) -> CResult<c_int> {
+    let func: Symbol<
+      '_,
+      unsafe extern "C" fn(handle: *const c_void, pValue: *const c_uint) -> c_int,
+    > = auto_any_res_c!(self.lib().get(b"MV_CC_SetGainMode\0"));
+    CResult::Ok(func(self.handle, value as c_uint as *const c_uint))
   }
 }

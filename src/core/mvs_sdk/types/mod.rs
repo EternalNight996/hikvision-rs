@@ -36,6 +36,7 @@ pub type UIntmaxT = u64;
 
 /// GigE设备信息
 #[repr(C)]
+#[derive(Debug)]
 pub struct MvGigeDeviceInfo {
   /// IP配置选项
   pub nIpCfgOption: c_uint,
@@ -67,6 +68,7 @@ pub struct MvGigeDeviceInfo {
 
 /// USB设备信息
 #[repr(C)]
+#[derive(Debug)]
 pub struct MvUsb3DeviceInfo {
   /// 控制输入端点
   pub CtrlInEndPoint: c_uchar,
@@ -108,6 +110,7 @@ pub struct MvUsb3DeviceInfo {
 
 /// CameraLink设备信息
 #[repr(C)]
+#[derive(Debug)]
 pub struct MvCamLDeviceInfo {
   /// 端口号
   pub chPortID: [c_uchar; INFO_MAX_BUFFER_SIZE],
@@ -220,15 +223,22 @@ pub enum MvSortMethod {
 #[repr(u8)]
 #[derive(Debug, Deserialize, Serialize)]
 pub enum MvEnumDeviceLayerType {
+  ///
   UnknowDevice = 0,
+  ///
   GigeDevice = 1,
+  ///
   E1394Device = 2,
+  ///
   UsbDevice = 4,
+  ///
   CameralinkDevice = 8,
+  ///
   All = 1 | 2 | 4 | 8,
 }
 /// 通过GenTL枚举到的Interface信息    \~english Interface Information with GenTL
 #[repr(C)]
+#[derive(Debug)]
 pub struct MvGentlIfInfo {
   /// GenTL接口ID
   pub chInterfaceId: [c_uchar; INFO_MAX_BUFFER_SIZE],
@@ -244,6 +254,7 @@ pub struct MvGentlIfInfo {
 
 /// 通过GenTL枚举到的设备信息列表    \~english Device Information List with GenTL
 #[repr(C)]
+#[derive(Debug)]
 pub struct MvGentlIfInfoList {
   /// 在线设备数量
   pub nInterfaceNum: c_uint,
@@ -253,6 +264,7 @@ pub struct MvGentlIfInfoList {
 
 /// 通过GenTL枚举到的设备信息    \~english Device Information with GenTL
 #[repr(C)]
+#[derive(Debug)]
 pub struct MvGentlDeviceInfo {
   /// GenTL接口ID
   pub chInterfaceId: [c_uchar; INFO_MAX_BUFFER_SIZE],
@@ -280,6 +292,7 @@ pub struct MvGentlDeviceInfo {
 
 /// 设备信息列表    \~english Device Information List with GenTL
 #[repr(C)]
+#[derive(Debug)]
 pub struct MvGentlDeviceInfoList {
   /// 在线设备数量
   pub nDeviceNum: c_uint,
@@ -289,6 +302,7 @@ pub struct MvGentlDeviceInfoList {
 
 /// Chunk内容    \~english The content of ChunkData
 #[repr(C)]
+#[derive(Debug)]
 pub struct MvChunkDataContent {
   /// 块数据
   pub pChunkData: *mut c_uchar,
@@ -417,6 +431,7 @@ pub struct MvFrameOut {
 }
 
 /// values for enumeration '_MV_GRAB_STRATEGY_'
+#[derive(Debug)]
 pub enum MvGrabStrategy {
   /// 从旧到新一帧一帧的获取图像
   OneByOne = 0,
@@ -430,6 +445,7 @@ pub enum MvGrabStrategy {
 
 /// 网络传输的相关信息    \~english Network transmission information
 #[repr(C)]
+#[derive(Debug)]
 pub struct MvNetTransInfo {
   /// 已接收数据大小  [统计StartGrabbing和StopGrabbing之间的数据量]
   pub nReceiveDataSize: c_longlong,
@@ -443,11 +459,12 @@ pub struct MvNetTransInfo {
   pub nResendPacketCount: c_longlong,
 }
 
-// values for enumeration 'MvSavePointCloudFileType'
+/// values for enumeration 'MvSavePointCloudFileType'
 pub type MvSavePointCloudFileType = c_int;
 
-// 保存3D数据到缓存    \~english Save 3D data to buffer
+/// 保存3D数据到缓存    \~english Save 3D data to buffer
 #[repr(C)]
+#[derive(Debug)]
 pub struct MvSavePointCloudParam {
   /// 每一行点的数量，即图像宽
   pub nLinePntNum: c_uint,
@@ -473,6 +490,7 @@ pub struct MvSavePointCloudParam {
 
 /// \~chinese 全匹配的一种信息结构体    \~english A fully matched information structure
 #[repr(C)]
+#[derive(Debug)]
 pub struct MvAllMatchInfo {
   /// 需要输出的信息类型
   pub nType: c_uint,
@@ -484,6 +502,7 @@ pub struct MvAllMatchInfo {
 
 /// 网络流量和丢包信息反馈结构体，对应类型为 MV_MATCH_TYPE_NET_DETECT    \~english Network traffic and packet loss feedback structure, the corresponding type is MV_MATCH_TYPE_NET_DETECT
 #[repr(C)]
+#[derive(Debug)]
 pub struct MvMatchInfoNetDetect {
   /// 已接收数据大小
   pub nReceiveDataSize: c_longlong,
@@ -501,6 +520,7 @@ pub struct MvMatchInfoNetDetect {
 
 /// \~chinese host收到从u3v设备端的总字节数，对应类型为 MV_MATCH_TYPE_USB_DETECT    \~english The total number of bytes host received from the u3v device side, the corresponding type is MV_MATCH_TYPE_USB_DETECT
 #[repr(C)]
+#[derive(Debug)]
 pub struct MvMatchInfoUsbDetect {
   /// 已接收数据大小
   pub nReceiveDataSize: c_longlong,
@@ -514,6 +534,7 @@ pub struct MvMatchInfoUsbDetect {
 
 /// \~chinese 显示帧信息   \~english Display frame information
 #[repr(C)]
+#[derive(Debug)]
 pub struct MvDisplayFrameInfo {
   /// 窗口句柄
   pub hWnd: *mut c_void,
@@ -537,7 +558,7 @@ pub type MvSaveIamgeType = c_uint;
 /// [IN] 插值方法 0-快速 1-均衡 2-最优（其它值默认为最优）
 pub type MvSaveIamgeMethodValue = c_uint;
 
-// 图片保存参数    \~english Save Image Parameters
+/// 图片保存参数    \~english Save Image Parameters
 #[repr(C)]
 #[derive(Debug)]
 pub struct MvSaveImageParamEx {
@@ -567,7 +588,7 @@ pub struct MvSaveImageParamEx {
   pub nReserved: [c_uint; 3],
 }
 
-// 保存BMP、JPEG、PNG、TIFF图片文件的参数    \~english Save BMP、JPEG、PNG、TIFF image file parameters
+/// 保存BMP、JPEG、PNG、TIFF图片文件的参数    \~english Save BMP、JPEG、PNG、TIFF image file parameters
 #[repr(C)]
 #[derive(Debug)]
 pub struct MvSaveImgToFileParam {
@@ -593,8 +614,9 @@ pub struct MvSaveImgToFileParam {
   pub nReserved: [c_uint; 8],
 }
 
-// 图像转换结构体    \~english Pixel convert structure
+/// 图像转换结构体    \~english Pixel convert structure
 #[repr(C)]
+#[derive(Debug)]
 pub struct MvPixelConvertParam {
   /// 图像宽
   pub nWidth: c_ushort,
@@ -617,10 +639,11 @@ pub struct MvPixelConvertParam {
   /// 保留字节
   pub nRes: [c_uint; 4],
 }
-
+///
 pub type MvRecordFormatType = c_int;
-// 录像参数    \~english Record Parameters
+/// 录像参数    \~english Record Parameters
 #[repr(C)]
+#[derive(Debug)]
 pub struct MvCcRecordParam {
   /// 输入数据的像素格式
   pub enPixelType: MvGvspPixelType,
@@ -643,8 +666,9 @@ pub struct MvCcRecordParam {
 const MAX_EVENT_NAME_SIZE: usize = 256;
 type STRING = [c_char; 256];
 
-// 录像数据    \~english Record Data
+/// 录像数据    \~english Record Data
 #[repr(C)]
+#[derive(Debug)]
 pub struct MvCcInputFrameInfo {
   /// 图像数据指针
   pub pData: *mut c_uchar,
@@ -653,33 +677,57 @@ pub struct MvCcInputFrameInfo {
   /// 保留字节
   pub nRes: [c_uint; 8],
 }
-
-// values for enumeration '_MV_CAM_ACQUISITION_MODE_'
+/// MvCamExposureMode values for enumeration '_MV_CAM_EXPOSURE_MODE_'
+#[repr(i32)]
+#[derive(Debug, Default)]
+pub enum MvCamExposureMode {
+  ///
+  Off = MV_EXPOSURE_AUTO_MODE_OFF,
+  ///
+  Once = MV_EXPOSURE_AUTO_MODE_ONCE,
+  ///
+  #[default]
+  Continuous = MV_EXPOSURE_AUTO_MODE_CONTINUOUS,
+}
+/// MV_CAM_GAIN_MODE values for enumeration '_MV_CAM_GAIN_MODE_'
+#[repr(i32)]
+#[derive(Debug, Default)]
+pub enum MvCamGainMode {
+  ///
+  Off = MV_GAIN_MODE_OFF,
+  ///
+  Once = MV_GAIN_MODE_ONCE,
+  ///
+  #[default]
+  Continuous = MV_GAIN_MODE_CONTINUOUS,
+}
+/// values for enumeration '_MV_CAM_ACQUISITION_MODE_'
 pub type MvCamAcquisitionMode = c_int;
 
 // values for enumeration '_MV_CAM_GAIN_MODE_'
-pub type MvCamGainMode = c_int;
+// pub type MvCamGainMode = c_int;
 
 // values for enumeration '_MV_CAM_EXPOSURE_MODE_'
-pub type MvCamExposureMode = c_int;
+// pub type MvCamExposureMode = c_int;
 
-// values for enumeration '_MV_CAM_EXPOSURE_AUTO_MODE_'
+/// values for enumeration '_MV_CAM_EXPOSURE_AUTO_MODE_'
 pub type MvCamExposureAutoMode = c_int;
 
-// values for enumeration '_MV_CAM_TRIGGER_MODE_'
+/// values for enumeration '_MV_CAM_TRIGGER_MODE_'
 pub type MvCamTriggerMode = c_int;
 
-// values for enumeration '_MV_CAM_GAMMA_SELECTOR_'
+/// values for enumeration '_MV_CAM_GAMMA_SELECTOR_'
 pub type MvCamGammaSelector = c_int;
 
-// values for enumeration '_MV_CAM_BALANCEWHITE_AUTO_'
+/// values for enumeration '_MV_CAM_BALANCEWHITE_AUTO_'
 pub type MvCamBalancewhiteAuto = c_int;
 
-// values for enumeration '_MV_CAM_TRIGGER_SOURCE_'
+/// values for enumeration '_MV_CAM_TRIGGER_SOURCE_'
 pub type MvCamTriggerSource = c_int;
 
-// Event事件回调信息\    \~english Event callback infomation
+/// Event事件回调信息\    \~english Event callback infomation
 #[repr(C)]
+#[derive(Debug)]
 pub struct MvEventOutInfo {
   /// Event名称
   pub eventName: [c_char; MAX_EVENT_NAME_SIZE],
@@ -703,8 +751,9 @@ pub struct MvEventOutInfo {
   pub nReserved: [c_uint; 16],
 }
 
-// 文件存取    \~english File Access
+/// 文件存取    \~english File Access
 #[repr(C)]
+#[derive(Debug)]
 pub struct MvCcFileAccess {
   /// 用户文件名
   pub pUserFileName: STRING,
@@ -714,8 +763,9 @@ pub struct MvCcFileAccess {
   pub nReserved: [c_uint; 32],
 }
 
-// 文件存取进度    \~english File Access Progress
+/// 文件存取进度    \~english File Access Progress
 #[repr(C)]
+#[derive(Debug)]
 pub struct MvCcFileAccessProgress {
   /// 已完成的长度
   pub nCompleted: Int64T,
@@ -725,10 +775,10 @@ pub struct MvCcFileAccessProgress {
   pub nReserved: [c_uint; 8],
 }
 
-// values for enumeration '_MV_GIGE_TRANSMISSION_TYPE_'
+/// values for enumeration '_MV_GIGE_TRANSMISSION_TYPE_'
 pub type MvGigeTransmissionType = c_int;
 
-// 传输模式，可以为单播模式、组播模式等    \~english Transmission type
+/// 传输模式，可以为单播模式、组播模式等    \~english Transmission type
 #[repr(C)]
 pub struct MvTransmissionType {
   /// 传输模式
@@ -743,8 +793,9 @@ pub struct MvTransmissionType {
 
 const MV_MAX_XML_SYMBOLIC_NUM: usize = 32;
 
-// 动作命令信息    \~english Action Command
+/// 动作命令信息    \~english Action Command
 #[repr(C)]
+#[derive(Debug)]
 pub struct MvActionCmdInfo {
   /// 设备密钥
   pub nDeviceey: c_uint,
@@ -764,8 +815,9 @@ pub struct MvActionCmdInfo {
   pub nReserved: [c_uint; 16],
 }
 
-// 动作命令返回信息    \~english Action Command Result
+/// 动作命令返回信息    \~english Action Command Result
 #[repr(C)]
+#[derive(Debug)]
 pub struct MvActionCmdResult {
   /// IP配置选项
   pub strDeviceAddress: [c_uchar; 16],
@@ -775,7 +827,7 @@ pub struct MvActionCmdResult {
   pub nReserved: [c_uint; 4],
 }
 
-// 动作命令返回信息列表    \~english Action Command Result List
+/// 动作命令返回信息列表    \~english Action Command Result List
 #[repr(C)]
 pub struct MvActionCmdResultList {
   /// 返回值个数
@@ -784,14 +836,15 @@ pub struct MvActionCmdResultList {
   pub pResults: *mut MvActionCmdResult,
 }
 
-// values for enumeration 'MV_XML_InterfaceType'
+/// values for enumeration 'MV_XML_InterfaceType'
 pub type MvXmlInterfaceType = c_int;
 
-// values for enumeration 'MV_XML_AccessMode'
+/// values for enumeration 'MV_XML_AccessMode'
 pub type MvXmlAccessMode = c_int;
 
-// 枚举类型值    \~english Enumeration Value
+/// 枚举类型值    \~english Enumeration Value
 #[repr(C)]
+#[derive(Debug)]
 pub struct MvCcEnumValue {
   /// 当前值
   pub nCurValue: c_uint,
@@ -803,8 +856,9 @@ pub struct MvCcEnumValue {
   pub nReserved: [c_uint; 4],
 }
 
-// Int类型值    \~english Int Value
+/// Int类型值    \~english Int Value
 #[repr(C)]
+#[derive(Debug)]
 pub struct MvCcIntValue {
   /// 当前值
   pub nCurValue: c_uint,
@@ -818,9 +872,9 @@ pub struct MvCcIntValue {
   pub nReserved: [c_uint; 4],
 }
 
-// Int类型值Ex    \~english Int Value Ex
+/// Int类型值Ex    \~english Int Value Ex
 #[repr(C)]
-#[derive(Deserialize, Serialize)]
+#[derive(Deserialize, Serialize, Debug)]
 pub struct MvCcIntValueEx {
   /// 当前值
   pub nCurValue: Int64T,
@@ -844,8 +898,9 @@ impl Default for MvCcIntValueEx {
     }
   }
 }
-// Float类型值    \~english Float Value
+/// Float类型值    \~english Float Value
 #[repr(C)]
+#[derive(Debug)]
 pub struct MvCcFloatValue {
   /// 当前值
   pub fCurValue: c_float,
@@ -857,8 +912,9 @@ pub struct MvCcFloatValue {
   pub nReserved: [c_uint; 4],
 }
 
-// String类型值    \~english String Value
+/// String类型值    \~english String Value
 #[repr(C)]
+#[derive(Debug)]
 pub struct MvCcStringValue {
   /// 当前值
   pub chCurValue: [c_char; 256],

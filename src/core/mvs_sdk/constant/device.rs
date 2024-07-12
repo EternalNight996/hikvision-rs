@@ -1,6 +1,7 @@
 pub use std::ffi::*;
 /// MVS SDK路径环境变量
 pub const HCMVS_LIB_ENV: &'static str = "HCMVS_LIB";
+/// Windows 控制动态链接库
 #[cfg(target_os = "windows")]
 pub const HCMVS_CAMERA_CONTROL_LIB: &'static str = "MvCameraControl.dll";
 #[cfg(target_os = "linux")]

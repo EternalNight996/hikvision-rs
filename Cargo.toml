@@ -33,7 +33,7 @@ path = "examples/global_net.rs"
 
 [package]
 name = "hikvision"
-version = "0.1.9"
+version = "0.1.11"
 description = "A rust hikvision sdk; 海康威视 RUST SDK"
 edition = "2021"
 rust-version = "1.76.0"

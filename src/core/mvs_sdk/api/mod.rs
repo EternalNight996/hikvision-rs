@@ -635,7 +635,7 @@ impl HcMvsCoreSdk {
     > = auto_any_res_c!(self.lib().get(b"MV_CC_GetOneFrameTimeout\0"));
     CResult::Ok(func(self.handle, data, data_size, frame_info, timeout))
   }
-  /// # 获取自动曝光模式
+  /// # 设置自动曝光模式
   /// ```
   /// 参数
   /// handle [IN] 相机句柄  

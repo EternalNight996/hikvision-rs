@@ -679,7 +679,7 @@ pub struct MvCcInputFrameInfo {
 }
 /// MvCamExposureMode values for enumeration '_MV_CAM_EXPOSURE_MODE_'
 #[repr(i32)]
-#[derive(Debug, Default)]
+#[derive(Debug, Default, Serialize, Deserialize, Clone)]
 pub enum MvCamExposureMode {
   ///
   Off = MV_EXPOSURE_AUTO_MODE_OFF,
@@ -691,7 +691,7 @@ pub enum MvCamExposureMode {
 }
 /// MV_CAM_GAIN_MODE values for enumeration '_MV_CAM_GAIN_MODE_'
 #[repr(i32)]
-#[derive(Debug, Default)]
+#[derive(Debug, Default, Serialize, Deserialize, Clone)]
 pub enum MvCamGainMode {
   ///
   Off = MV_GAIN_MODE_OFF,

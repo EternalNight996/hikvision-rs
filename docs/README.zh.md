@@ -53,6 +53,22 @@
     <th><h3 style="color:#fff"><center>-</center></h3></th>
   </tr>
   <tr>
+    <td><center>exposure_auto</center></td>
+    <td><h4 style="color:green"><center>√</center></h4></td>
+    <td><h4 style="color:green"><center>√</center></h4></td>
+    <td><h4 style="color:white"><center>-</center></h4></td>
+    <td><h4 style="color:white"><center>-</center></h4></td>
+    <td><h4 style="color:#aaa"><center>自动曝光</center></h4></td>
+  </tr>
+  <tr>
+    <td><center>gain_mode</center></td>
+    <td><h4 style="color:green"><center>√</center></h4></td>
+    <td><h4 style="color:green"><center>√</center></h4></td>
+    <td><h4 style="color:white"><center>-</center></h4></td>
+    <td><h4 style="color:white"><center>-</center></h4></td>
+    <td><h4 style="color:#aaa"><center>自动增益</center></h4></td>
+  </tr>
+  <tr>
     <td><center>Init SDK</center></td>
     <td><h4 style="color:green"><center>√</center></h4></td>
     <td><h4 style="color:green"><center>√</center></h4></td>

@@ -53,7 +53,7 @@
   <tr>
     <td><center>exposure_auto</center></td>
     <td><h4 style="color:green"><center>√</center></h4></td>
-    <td><h4 style="color:green"><center>√</center></h4></td>
+    <td><h4 style="color:green"><center>-</center></h4></td>
     <td><h4 style="color:white"><center>-</center></h4></td>
     <td><h4 style="color:white"><center>-</center></h4></td>
     <td><h4 style="color:#aaa"><center>exposure_auto</center></h4></td>
@@ -61,7 +61,7 @@
   <tr>
     <td><center>gain_mode</center></td>
     <td><h4 style="color:green"><center>√</center></h4></td>
-    <td><h4 style="color:green"><center>√</center></h4></td>
+    <td><h4 style="color:green"><center>-</center></h4></td>
     <td><h4 style="color:white"><center>-</center></h4></td>
     <td><h4 style="color:white"><center>-</center></h4></td>
     <td><h4 style="color:#aaa"><center>gain_mode</center></h4></td>

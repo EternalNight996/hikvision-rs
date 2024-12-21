@@ -4,6 +4,8 @@ use e_utils::Result;
 use serde::{Deserialize, Serialize};
 use std::{env, path::Path};
 
+pub const ORIGN_KEY: &str = "HIKVISION";
+
 #[derive(Clone, Debug, Deserialize, Default, Serialize, e_utils::Json)]
 #[serde(rename_all = "camelCase")]
 pub struct MyEnv {

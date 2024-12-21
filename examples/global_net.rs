@@ -1,3 +1,4 @@
+use config::env::ORIGN_KEY;
 use e_utils::parse::{AutoParse as _, ParseResult as _};
 use e_utils::system::env_path_join;
 use e_utils::Result;
@@ -25,7 +26,7 @@ lazy_static! {
 }
 
 fn main() -> Result<()> {
-  e_utils::system::init_original_dir()?;
+  e_utils::system::init_original_dir(ORIGN_KEY)?;
   let cf = Config::new();
   cf.init_env()?;
 

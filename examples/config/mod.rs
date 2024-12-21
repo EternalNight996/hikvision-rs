@@ -5,6 +5,7 @@ use e_utils::parse::{AutoJson as _, AutoPath as _, MyParseFormat as _};
 use e_utils::system::{get_original_dir, init_original_dir};
 use e_utils::ui::UiConfig;
 use e_utils::{Error, Result};
+use env::ORIGN_KEY;
 use hikvision::mvs_sdk::types::{MvSaveIamgeMethodValue, MvSaveIamgeType};
 use serde::de::DeserializeOwned;
 use serde::{Deserialize, Serialize};
@@ -293,7 +294,7 @@ impl Config {
   /// 写入配置
   #[allow(unused)]
   pub fn dump(&self, ctype: ConfigType) -> Result<()> {
-    let home = get_original_dir()?;
+    let home = get_original_dir(ORIGN_KEY)?;
     let ctype_str = ctype.to_string();
     match ctype {
       ConfigType::Main => self.conf.auto_write_json(home, ctype_str)?,
@@ -304,7 +305,7 @@ impl Config {
   /// 读取并同步配置
   #[allow(unused)]
   pub fn sync(&mut self, ctype: ConfigType) -> Result<()> {
-    let target = get_original_dir()?.join(ctype.to_string());
+    let target = get_original_dir(ORIGN_KEY)?.join(ctype.to_string());
     match ctype {
       ConfigType::Main => self.conf = Conf::auto_read_json(target)?,
       ConfigType::Env => self.env = MyEnv::auto_read_json(target)?,
@@ -317,7 +318,7 @@ impl Config {
   where
     R: DeserializeOwned,
   {
-    let home = get_original_dir()?;
+    let home = get_original_dir(ORIGN_KEY)?;
     let value = home.join(ctype.to_string()).auto_read_json::<R>()?;
     Ok(value)
   }

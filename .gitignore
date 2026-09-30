@@ -6,3 +6,5 @@ Cargo.lock
 /examples/Cargo.lock
 /libs/HCMvs/*
 /libs/HCNet/*
+# 厂商 SDK(海康 HCNetSDK, ~252MB), 不入库
+docs/SDK/

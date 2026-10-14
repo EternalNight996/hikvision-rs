@@ -4,6 +4,10 @@
 # 默认是 `rlib`
 crate-type = ["rlib"]
 proc-macro = false
+# 关掉 doctest：本 crate 的文档代码块是**从海康 C 头文件逐字搬来的参数说明**（不是可运行的 Rust 示例），
+# 开着会让 `cargo test` 永远红（数十个 doctest 编译失败，与我们的改动无关）。真正的测试是 src 里的
+# 单元测试（ABI 守卫 + 返回码映射）；文档瘦身时这些块会统一改成 ```text。
+doctest = false
 
 [features]
 net = []

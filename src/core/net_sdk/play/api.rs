@@ -1,3 +1,6 @@
+// 参数名刻意保持与海康官方头文件一致（nMsec / pValue / pstDevList …），便于和官方文档逐字对照。
+// 这些是 FFI 声明，参数名不参与 ABI，也不影响调用方（按位置传参）。
+#![allow(non_snake_case)]
 use e_utils::{
   auto_any_res_c,
   parse::{AutoParse as _, CAutoParse},

@@ -1,3 +1,6 @@
+// 参数名刻意保持与海康官方头文件一致（nMsec / pValue / pstDevList …），便于和官方文档逐字对照。
+// 这些是 FFI 声明，参数名不参与 ABI，也不影响调用方（按位置传参）。
+#![allow(non_snake_case)]
 use super::types::*;
 use crate::Lib;
 use e_utils::{auto_any_res_c, CResult};
@@ -172,6 +175,18 @@ impl HcMvsCoreSdk {
       unsafe extern "C" fn(nTLayerType: c_uint, pstDevList: *mut MvCcDeviceInfoList) -> c_int,
     > = auto_any_res_c!(self.lib().get(b"MV_CC_EnumDevices\0"));
     CResult::Ok(func(layer_type as c_uint, out_dev_list))
+  }
+  /// # ch:枚举设备（**官方拼写**；与 [`Self::enumrate_devices`] 同一实现） | en:Enumerate Device
+  ///
+  /// 历史拼写 `enumrate_devices` 保留为兼容别名（heg-record-camera 等消费者在用），
+  /// 新代码请用本方法。
+  #[inline]
+  pub unsafe extern "C" fn enumerate_devices(
+    &self,
+    layer_type: MvEnumDeviceLayerType,
+    out_dev_list: *mut MvCcDeviceInfoList,
+  ) -> CResult<c_int> {
+    self.enumrate_devices(layer_type, out_dev_list)
   }
   /// # ch:枚举设备 | en:Enumerate Device
   /// ```text

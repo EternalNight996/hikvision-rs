@@ -924,9 +924,93 @@ pub struct MvCcStringValue {
   pub nReserved: [c_uint; 2],
 }
 
-/// # cbOutput [IN] 回调函数指针  
+/// # cbOutput [IN] 回调函数指针
+///
+/// 官方原型是 `void(__stdcall *)(...)`，**返回类型必须是 `()` 而不是 `c_void`**：
+/// `c_void` 是「不透明类型」，用它当返回值会得到 rustc 警告
+/// `declarations returning c_void are not compatible with C functions returning void`。
 pub type CbOutputCallback = extern "C" fn(
-  pData: *const c_uchar,
-  pstFrameInfo: *const MvFrameOutInfoEx,
-  pUser: *const c_void,
-) -> c_void;
+  p_data: *const c_uchar,
+  pst_frame_info: *const MvFrameOutInfoEx,
+  p_user: *const c_void,
+);
+
+/// ABI 守卫测试：**无相机、无 MVS 运行库也能跑**（`cargo test --features mvs`）。
+///
+/// 这些结构体是直接把内存交给海康 DLL 读写的，字段顺序/类型/对齐一旦漂移，
+/// 后果是「取到垃圾数据」或「越界写」——而这在真机上往往只表现为「图像花屏/偶发崩溃」，极难定位。
+/// 期望值来自官方头文件（MVS V5.0.0）：`CameraParams.h` / `ObsoleteCamParams.h`。
+#[cfg(all(test, feature = "mvs"))]
+mod abi_tests {
+  use super::*;
+
+  /// 取字段字节偏移（不读取内存）。刻意不用 `core::mem::offset_of!`：它需要 Rust 1.77，
+  /// 而本 crate 声明 MSRV 1.76。
+  macro_rules! offset_of {
+    ($t:ty, $f:ident) => {{
+      let base = ::std::mem::MaybeUninit::<$t>::uninit();
+      let p = base.as_ptr();
+      unsafe { (::std::ptr::addr_of!((*p).$f) as usize) - (p as usize) }
+    }};
+  }
+
+  /// 结构体总大小必须与官方一致（多一字节少一字节都会让 DLL 写坏我们的内存）
+  #[test]
+  fn struct_sizes_match_official_header() {
+    assert_eq!(::std::mem::size_of::<MvCcIntValueEx>(), 96, "MVCC_INTVALUE_EX_T = 4×int64 + nReserved[16]");
+    assert_eq!(::std::mem::size_of::<MvSaveImgToFileParam>(), 328, "MV_SAVE_IMG_TO_FILE_PARAM");
+    assert_eq!(::std::mem::size_of::<MvFrameOutInfoEx>(), 256, "MV_FRAME_OUT_INFO_EX");
+    assert_eq!(::std::mem::size_of::<MvCcDeviceInfoList>(), 2056, "MV_CC_DEVICE_INFO_LIST = u32 + 256×指针");
+    assert_eq!(::std::mem::size_of::<MvGigeDeviceInfo>(), 216, "MV_GIGE_DEVICE_INFO");
+    assert_eq!(::std::mem::size_of::<MvUsb3DeviceInfo>(), 540, "MV_USB3_DEVICE_INFO");
+    assert_eq!(::std::mem::size_of::<MvCamLDeviceInfo>(), 536, "MV_CamL_DEV_INFO");
+  }
+
+  /// 关键字段偏移：决定了「我们从哪儿读型号/序列号/帧信息」
+  #[test]
+  fn key_offsets_match_official_header() {
+    // MV_FRAME_OUT_INFO_EX
+    assert_eq!(offset_of!(MvFrameOutInfoEx, nWidth), 0);
+    assert_eq!(offset_of!(MvFrameOutInfoEx, enPixelType), 4);
+    assert_eq!(offset_of!(MvFrameOutInfoEx, nHostTimeStamp), 24);
+    assert_eq!(offset_of!(MvFrameOutInfoEx, nFrameLen), 32);
+    assert_eq!(offset_of!(MvFrameOutInfoEx, UnparsedChunkList), 104);
+    assert_eq!(offset_of!(MvFrameOutInfoEx, nReserved), 112);
+
+    // MV_SAVE_IMG_TO_FILE_PARAM（注意官方 nWidth/nHeight 是 unsigned short）
+    assert_eq!(offset_of!(MvSaveImgToFileParam, enPixelType), 0);
+    assert_eq!(offset_of!(MvSaveImgToFileParam, pData), 8);
+    assert_eq!(offset_of!(MvSaveImgToFileParam, nDataLen), 16);
+    assert_eq!(offset_of!(MvSaveImgToFileParam, nWidth), 20);
+    assert_eq!(offset_of!(MvSaveImgToFileParam, nHeight), 22);
+    assert_eq!(offset_of!(MvSaveImgToFileParam, pImagePath), 32);
+    assert_eq!(offset_of!(MvSaveImgToFileParam, iMethodValue), 288);
+
+    // MV_GIGE_DEVICE_INFO（型号/序列号的读取位置）
+    assert_eq!(offset_of!(MvGigeDeviceInfo, chModelName), 52);
+    assert_eq!(offset_of!(MvGigeDeviceInfo, chSerialNumber), 164);
+    assert_eq!(offset_of!(MvGigeDeviceInfo, nNetExport), 196);
+
+    // MV_CC_DEVICE_INFO（联合体起点）
+    assert_eq!(offset_of!(MvCcDeviceInfo, SpecialInfo), 32);
+  }
+
+  /// 枚举取值：传错就等于枚举错传输层 / 用错访问权限
+  #[test]
+  fn enum_discriminants_match_official_header() {
+    assert_eq!(MvEnumDeviceLayerType::GigeDevice as u8, 1);
+    assert_eq!(MvEnumDeviceLayerType::UsbDevice as u8, 4);
+    assert_eq!(MvEnumDeviceLayerType::All as u8, 15, "MV_GIGE|MV_1394|MV_USB|MV_CAMERALINK");
+    assert_eq!(MvAccessMode::Exclusive as u8, 1);
+    assert_eq!(MvAccessMode::Monitor as u8, 7);
+  }
+
+  /// 设备列表默认值：必须是「0 台设备 + 256 个空指针」
+  #[test]
+  fn device_list_default_is_empty() {
+    let list = MvCcDeviceInfoList::default();
+    assert_eq!(list.nDeviceNum, 0);
+    assert_eq!(list.pDeviceInfo.len(), 256, "MV_MAX_DEVICE_NUM");
+    assert!(list.pDeviceInfo.iter().all(|p| p.is_null()));
+  }
+}

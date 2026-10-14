@@ -128,6 +128,35 @@ impl HcMvsCoreSdk {
     > = auto_any_res_c!(self.lib().get(b"MV_CC_FreeImageBuffer\0"));
     CResult::Ok(func(self.handle, frame))
   }
+  /// # ch:获取Float属性值 | en:Get Float Value
+  ///
+  /// 许多机型（尤其 GigE）的 `ExposureTime` / `Gain` / `BalanceRatio` / `AcquisitionFrameRate`
+  /// 是 **Float 节点**，用 `get_int_value_ex` 读会返回 `0x80000109`；必须走本接口。
+  pub unsafe extern "C" fn get_float_value(
+    &self,
+    key: *const c_char,
+    float_value: *mut MvCcFloatValue,
+  ) -> CResult<c_int> {
+    // # C原型:int __stdcall MV_CC_GetFloatValue(void* handle, const char* strKey, MVCC_FLOATVALUE* pstFloatValue)
+    let func: Symbol<
+      '_,
+      unsafe extern "C" fn(
+        handle: *const c_void,
+        strKey: *const c_char,
+        pstFloatValue: *mut MvCcFloatValue,
+      ) -> c_int,
+    > = auto_any_res_c!(self.lib().get(b"MV_CC_GetFloatValue\0"));
+    CResult::Ok(func(self.handle, key, float_value))
+  }
+  /// # ch:设置Float属性值 | en:Set Float Value
+  pub unsafe extern "C" fn set_float_value(&self, key: *const c_char, value: c_float) -> CResult<c_int> {
+    // # C原型:int __stdcall MV_CC_SetFloatValue(void* handle, const char* strKey, float fValue)
+    let func: Symbol<
+      '_,
+      unsafe extern "C" fn(handle: *const c_void, strKey: *const c_char, fValue: c_float) -> c_int,
+    > = auto_any_res_c!(self.lib().get(b"MV_CC_SetFloatValue\0"));
+    CResult::Ok(func(self.handle, key, value))
+  }
   /// # ch:打开获取或设置相机参数的GUI界面   | en:
   pub unsafe extern "C" fn open_params_gui(&self) -> CResult<c_int> {
     // MV_CAMCTRL_API int __stdcall MV_CC_OpenParamsGUI  ( IN void *  handle )

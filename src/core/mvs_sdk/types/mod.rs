@@ -911,6 +911,16 @@ pub struct MvCcFloatValue {
   /// 预留
   pub nReserved: [c_uint; 4],
 }
+impl Default for MvCcFloatValue {
+  fn default() -> Self {
+    Self {
+      fCurValue: 0.0,
+      fMax: 0.0,
+      fMin: 0.0,
+      nReserved: [0; 4],
+    }
+  }
+}
 
 /// String类型值    \~english String Value
 #[repr(C)]
@@ -958,6 +968,7 @@ mod abi_tests {
   #[test]
   fn struct_sizes_match_official_header() {
     assert_eq!(::std::mem::size_of::<MvCcIntValueEx>(), 96, "MVCC_INTVALUE_EX_T = 4×int64 + nReserved[16]");
+    assert_eq!(::std::mem::size_of::<MvCcFloatValue>(), 28, "MVCC_FLOATVALUE_T = 3×float + nReserved[4]");
     assert_eq!(::std::mem::size_of::<MvSaveImgToFileParam>(), 328, "MV_SAVE_IMG_TO_FILE_PARAM");
     assert_eq!(::std::mem::size_of::<MvFrameOutInfoEx>(), 256, "MV_FRAME_OUT_INFO_EX");
     assert_eq!(::std::mem::size_of::<MvCcDeviceInfoList>(), 2056, "MV_CC_DEVICE_INFO_LIST = u32 + 256×指针");

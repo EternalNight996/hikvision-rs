@@ -128,6 +128,26 @@ impl HcMvsCoreSdk {
     > = auto_any_res_c!(self.lib().get(b"MV_CC_FreeImageBuffer\0"));
     CResult::Ok(func(self.handle, frame))
   }
+  /// # ch:获取Enum属性值 | en:Get Enum Value
+  ///
+  /// 枚举节点**只能通过本接口读**（当前值 + 支持值列表）。这是「自动档到底开了没」的唯一读法：
+  /// 原生 `SetExposureAutoMode`/`SetGainMode` 属已废弃接口，且没有对应的读接口。
+  pub unsafe extern "C" fn get_enum_value(
+    &self,
+    key: *const c_char,
+    enum_value: *mut MvCcEnumValue,
+  ) -> CResult<c_int> {
+    // # C原型:int __stdcall MV_CC_GetEnumValue(void* handle, const char* strKey, MVCC_ENUMVALUE* pstEnumValue)
+    let func: Symbol<
+      '_,
+      unsafe extern "C" fn(
+        handle: *const c_void,
+        strKey: *const c_char,
+        pstEnumValue: *mut MvCcEnumValue,
+      ) -> c_int,
+    > = auto_any_res_c!(self.lib().get(b"MV_CC_GetEnumValue\0"));
+    CResult::Ok(func(self.handle, key, enum_value))
+  }
   /// # ch:获取Float属性值 | en:Get Float Value
   ///
   /// 许多机型（尤其 GigE）的 `ExposureTime` / `Gain` / `BalanceRatio` / `AcquisitionFrameRate`

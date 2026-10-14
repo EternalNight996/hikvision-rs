@@ -791,7 +791,9 @@ pub struct MvTransmissionType {
   pub nReserved: [c_uint; 32],
 }
 
-const MV_MAX_XML_SYMBOLIC_NUM: usize = 32;
+// 注意：这里**不能**再定义局部 `MV_MAX_XML_SYMBOLIC_NUM`——它会遮蔽
+// `constant::device` 里的官方值（64），导致 `MvCcEnumValue` 少 128 字节（152 vs 280），
+// SDK 填值时会越界写。ABI 守卫测试（abi_tests）已锁死该尺寸。
 
 /// 动作命令信息    \~english Action Command
 #[repr(C)]
@@ -854,6 +856,16 @@ pub struct MvCcEnumValue {
   pub nSupportValue: [c_uint; MV_MAX_XML_SYMBOLIC_NUM],
   /// 预留
   pub nReserved: [c_uint; 4],
+}
+impl Default for MvCcEnumValue {
+  fn default() -> Self {
+    Self {
+      nCurValue: 0,
+      nSupportedNum: 0,
+      nSupportValue: [0; MV_MAX_XML_SYMBOLIC_NUM],
+      nReserved: [0; 4],
+    }
+  }
 }
 
 /// Int类型值    \~english Int Value
@@ -969,6 +981,11 @@ mod abi_tests {
   fn struct_sizes_match_official_header() {
     assert_eq!(::std::mem::size_of::<MvCcIntValueEx>(), 96, "MVCC_INTVALUE_EX_T = 4×int64 + nReserved[16]");
     assert_eq!(::std::mem::size_of::<MvCcFloatValue>(), 28, "MVCC_FLOATVALUE_T = 3×float + nReserved[4]");
+    assert_eq!(
+      ::std::mem::size_of::<MvCcEnumValue>(),
+      280,
+      "MVCC_ENUMVALUE_T = 2×u32 + nSupportValue[64] + nReserved[4]"
+    );
     assert_eq!(::std::mem::size_of::<MvSaveImgToFileParam>(), 328, "MV_SAVE_IMG_TO_FILE_PARAM");
     assert_eq!(::std::mem::size_of::<MvFrameOutInfoEx>(), 256, "MV_FRAME_OUT_INFO_EX");
     assert_eq!(::std::mem::size_of::<MvCcDeviceInfoList>(), 2056, "MV_CC_DEVICE_INFO_LIST = u32 + 256×指针");

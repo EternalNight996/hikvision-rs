@@ -128,6 +128,19 @@ impl HcMvsCoreSdk {
     > = auto_any_res_c!(self.lib().get(b"MV_CC_FreeImageBuffer\0"));
     CResult::Ok(func(self.handle, frame))
   }
+  /// # ch:设置取流策略 | en:Set Grab Strategy
+  ///
+  /// 官方枚举（`MvGrabStrategy`）：`0=OneByOne 1=LatestImagesOnly 2=LatestImages 3=UpcomingImage`。
+  /// 预览/抓图场景推荐 **`LatestImagesOnly`**：始终返回最新帧并丢弃积压帧，避免延迟堆积；
+  /// 官方注：U3V 设备不支持 `UpcomingImage`；需在 `StartGrabbing` 之前调用。
+  pub unsafe extern "C" fn set_grab_strategy(&self, strategy: MvGrabStrategy) -> CResult<c_int> {
+    // # C原型:int __stdcall MV_CC_SetGrabStrategy(void* handle, MV_GRAB_STRATEGY enGrabStrategy)
+    let func: Symbol<
+      '_,
+      unsafe extern "C" fn(handle: *const c_void, enGrabStrategy: c_uint) -> c_int,
+    > = auto_any_res_c!(self.lib().get(b"MV_CC_SetGrabStrategy\0"));
+    CResult::Ok(func(self.handle, strategy as c_uint))
+  }
   /// # ch:获取Enum属性值 | en:Get Enum Value
   ///
   /// 枚举节点**只能通过本接口读**（当前值 + 支持值列表）。这是「自动档到底开了没」的唯一读法：

@@ -128,6 +128,17 @@ impl HcMvsCoreSdk {
     > = auto_any_res_c!(self.lib().get(b"MV_CC_FreeImageBuffer\0"));
     CResult::Ok(func(self.handle, frame))
   }
+  /// # ch:获取网络流量和丢包信息 | en:Get All Match Info
+  ///
+  /// GigE 现场排丢帧的关键接口：一次拿到「已接收字节数 / 丢包数 / 丢帧数 / 请求重发数 / 重发数」，
+  /// 对应 MVS 客户端底部状态栏的「带宽 / 丢包数」与「错误数」。
+  /// 调用方需自行填 `nType`（`MV_MATCH_TYPE_NET_DETECT` 或 `MV_MATCH_TYPE_USB_DETECT`）与缓存指针。
+  pub unsafe extern "C" fn get_all_match_info(&self, match_info: *mut MvAllMatchInfo) -> CResult<c_int> {
+    // # C原型:int __stdcall MV_CC_GetAllMatchInfo(void* handle, MV_ALL_MATCH_INFO* pstInfo)
+    let func: Symbol<'_, unsafe extern "C" fn(handle: *const c_void, pstInfo: *mut MvAllMatchInfo) -> c_int> =
+      auto_any_res_c!(self.lib().get(b"MV_CC_GetAllMatchInfo\0"));
+    CResult::Ok(func(self.handle, match_info))
+  }
   /// # ch:设置取流策略 | en:Set Grab Strategy
   ///
   /// 官方枚举（`MvGrabStrategy`）：`0=OneByOne 1=LatestImagesOnly 2=LatestImages 3=UpcomingImage`。

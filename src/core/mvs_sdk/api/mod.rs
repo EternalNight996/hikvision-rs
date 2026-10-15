@@ -587,6 +587,27 @@ impl HcMvsCoreSdk {
     > = auto_any_res_c!(self.lib().get(b"MV_CC_GetBoolValue\0"));
     CResult::Ok(func(self.handle, key, value))
   }
+  /// # ch:设置Bool型属性值    | en:
+  /// ```
+  /// 参数
+  /// handle [IN] 设备句柄
+  /// strKey [IN] 属性键值，如使能采集帧率则为"AcquisitionFrameRateEnable"
+  /// bValue [IN] 想要设置的设备属性值（true/false）
+  ///
+  /// 备注
+  /// 与 `get_bool_value` 配对；帧率控制、IO 使能等 Bool 节点都用它。
+  /// ```
+  pub unsafe extern "C" fn set_bool_value(&self, key: *const c_char, value: bool) -> CResult<c_int> {
+    let func: Symbol<
+      '_,
+      unsafe extern "C" fn(
+        handle: *const c_void,
+        strKey: *const c_char,
+        bValue: bool,
+      ) -> c_int,
+    > = auto_any_res_c!(self.lib().get(b"MV_CC_SetBoolValue\0"));
+    CResult::Ok(func(self.handle, key, value))
+  }
   /// # ch:设置Enum型属性值    | en:
   /// ```
   /// 参数

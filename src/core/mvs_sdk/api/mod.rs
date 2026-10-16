@@ -608,6 +608,27 @@ impl HcMvsCoreSdk {
     > = auto_any_res_c!(self.lib().get(b"MV_CC_SetBoolValue\0"));
     CResult::Ok(func(self.handle, key, value))
   }
+  /// # ch:设置Int型属性值(现行接口，带节点名校验)  | en:
+  /// ```
+  /// 参数
+  /// handle [IN] 设备句柄
+  /// strKey [IN] 属性键值，如 "GevSCPSPacketSize"
+  /// nValue [IN] 想要设置的设备属性值
+  ///
+  /// 备注
+  /// 与废弃的 `set_int_value` 等价但为**现行**接口（`MV_CC_SetIntValueEx`）。
+  /// ```
+  pub unsafe extern "C" fn set_int_value_ex(&self, key: *const c_char, value: c_uint) -> CResult<c_int> {
+    let func: Symbol<
+      '_,
+      unsafe extern "C" fn(
+        handle: *const c_void,
+        strKey: *const c_char,
+        nValue: c_uint,
+      ) -> c_int,
+    > = auto_any_res_c!(self.lib().get(b"MV_CC_SetIntValueEx\0"));
+    CResult::Ok(func(self.handle, key, value))
+  }
   /// # ch:设置Enum型属性值    | en:
   /// ```
   /// 参数

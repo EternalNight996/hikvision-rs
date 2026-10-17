@@ -629,6 +629,23 @@ impl HcMvsCoreSdk {
     > = auto_any_res_c!(self.lib().get(b"MV_CC_SetIntValueEx\0"));
     CResult::Ok(func(self.handle, key, value))
   }
+  /// # ch:执行Command型节点（如 "TriggerSoftware"）  | en:
+  /// ```
+  /// 参数
+  /// handle [IN] 设备句柄
+  /// strKey [IN] 属性键值，如 "TriggerSoftware"（软触发）、"DeviceReset" 等
+  ///
+  /// 备注
+  /// 命令节点没有值，只有「执行」动作：`MV_CC_SetCommandValue`。
+  /// 触发/IO 场景下用它做软触发，避免使用已废弃的 SetTriggerMode 系列。
+  /// ```
+  pub unsafe extern "C" fn set_command_value(&self, key: *const c_char) -> CResult<c_int> {
+    let func: Symbol<
+      '_,
+      unsafe extern "C" fn(handle: *const c_void, strKey: *const c_char) -> c_int,
+    > = auto_any_res_c!(self.lib().get(b"MV_CC_SetCommandValue\0"));
+    CResult::Ok(func(self.handle, key))
+  }
   /// # ch:设置Enum型属性值    | en:
   /// ```
   /// 参数

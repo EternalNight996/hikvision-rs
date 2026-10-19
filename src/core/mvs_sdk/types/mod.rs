@@ -957,6 +957,13 @@ pub type CbOutputCallback = extern "C" fn(
   p_user: *const c_void,
 );
 
+/// # 异常事件回调（官方 `cbException`）
+///
+/// 原型 `void(__stdcall *)(unsigned int nUser, void* pUser)`；`nUser` 是事件码，
+/// 例如 `MV_EXCEPTION_DEV_DISCONNECT = 0x00008001`（相机掉线）。
+/// **回调在 SDK 内部线程执行**：内部只做最轻量的记录（入队），不要在里面做重活。
+pub type CbExceptionCallback = extern "C" fn(n_user: c_uint, p_user: *const c_void);
+
 /// ABI 守卫测试：**无相机、无 MVS 运行库也能跑**（`cargo test --features mvs`）。
 ///
 /// 这些结构体是直接把内存交给海康 DLL 读写的，字段顺序/类型/对齐一旦漂移，

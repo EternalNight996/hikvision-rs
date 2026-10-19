@@ -421,6 +421,31 @@ impl HcMvsCoreSdk {
       auto_any_res_c!(self.lib().get(b"MV_CC_IsDeviceConnected\0"));
     CResult::Ok(func(self.handle))
   }
+  /// # ch:注册异常回调（掉线/异常事件）  | en: Register exception callback
+  /// ```
+  /// 参数
+  /// handle [IN] 设备句柄
+  /// cbException [IN] 异常回调函数（SDK 内部线程调用）
+  /// pUser [IN] 用户自定义变量
+  /// 备注
+  /// nUser 常见事件码：MV_EXCEPTION_DEV_DISCONNECT = 0x00008001（掉线）。
+  /// 回调里只做轻量记录（入队），重活放主线程。
+  /// ```
+  pub unsafe extern "C" fn register_exception_callback(
+    &self,
+    cb_exception: CbExceptionCallback,
+    user: *const c_void,
+  ) -> CResult<c_int> {
+    let func: Symbol<
+      '_,
+      unsafe extern "C" fn(
+        handle: *const c_void,
+        cbException: CbExceptionCallback,
+        pUser: *const c_void,
+      ) -> c_int,
+    > = auto_any_res_c!(self.lib().get(b"MV_CC_RegisterExceptionCallBack\0"));
+    CResult::Ok(func(self.handle, cb_exception, user))
+  }
   /// # ch:注册图像数据回调 | en:Register the image callback function
   /// ```
   /// 参数

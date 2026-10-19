@@ -629,6 +629,29 @@ impl HcMvsCoreSdk {
     > = auto_any_res_c!(self.lib().get(b"MV_CC_SetIntValueEx\0"));
     CResult::Ok(func(self.handle, key, value))
   }
+  /// # 保存相机参数到文件（.mfs）  | en: Feature Save
+  /// ```
+  /// 参数
+  /// handle [IN] 设备句柄
+  /// pstFileName [IN] 文件名（.mfs）
+  /// 备注
+  /// 与 `MV_CC_FeatureLoad` 配对使用：把当前相机参数整包导出，便于换机/换班恢复。
+  /// ```
+  pub unsafe extern "C" fn feature_save(&self, file: *const c_char) -> CResult<c_int> {
+    let func: Symbol<
+      '_,
+      unsafe extern "C" fn(handle: *const c_void, pstFileName: *const c_char) -> c_int,
+    > = auto_any_res_c!(self.lib().get(b"MV_CC_FeatureSave\0"));
+    CResult::Ok(func(self.handle, file))
+  }
+  /// # 从文件加载相机参数（.mfs）  | en: Feature Load
+  pub unsafe extern "C" fn feature_load(&self, file: *const c_char) -> CResult<c_int> {
+    let func: Symbol<
+      '_,
+      unsafe extern "C" fn(handle: *const c_void, pstFileName: *const c_char) -> c_int,
+    > = auto_any_res_c!(self.lib().get(b"MV_CC_FeatureLoad\0"));
+    CResult::Ok(func(self.handle, file))
+  }
   /// # ch:执行Command型节点（如 "TriggerSoftware"）  | en:
   /// ```
   /// 参数

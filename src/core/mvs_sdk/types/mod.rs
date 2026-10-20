@@ -632,10 +632,10 @@ pub struct MvPixelConvertParam {
   pub enDstPixelType: MvGvspPixelType,
   /// 输出数据缓存
   pub pDstBuffer: *mut c_uchar,
-  /// 输出数据大小
-  pub nDstLen: c_uint,
-  /// 提供的输出缓冲区大小
+  /// **提供的输出缓冲区大小**（官方头文件里 `nDstBufferSize` 在 `nDstLen` 之前——顺序不能反）
   pub nDstBufferSize: c_uint,
+  /// 输出数据实际大小（SDK 回填）
+  pub nDstLen: c_uint,
   /// 保留字节
   pub nRes: [c_uint; 4],
 }

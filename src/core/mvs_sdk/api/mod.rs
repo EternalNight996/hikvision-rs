@@ -785,6 +785,23 @@ impl HcMvsCoreSdk {
   /// pstSaveParam [IN][OUT] 保存图片参数结构体
   /// 备注
   ///  • 通过将接口可以将从设备采集到的原始图像数据转换成JPEG或者BMP等格式并存放在指定内存中，然后用户可以将转换之后的数据直接保存成图片文件。该接口调用无接口顺序要求，有图像源数据就可以进行转换，可以先调用图像采集 接口，获取一帧图像数据，然后再通过该接口转换格式。
+  /// # ch:像素格式转换（通用兜底：Bayer/10-12bit/YUV/Planar → BGR8 等）
+  /// ```
+  /// 参数
+  /// handle [IN] 设备句柄
+  /// pstCvtParam [IN OUT] 转换参数（字段顺序见 MvPixelConvertParam 注释）
+  /// 备注 这是**官方唯一的通用像素转换**接口；比上层自己枚举几十种格式可靠。
+  /// ```
+  pub unsafe extern "C" fn convert_pixel_type(
+    &self,
+    pst_cvt_param: *mut MvPixelConvertParam,
+  ) -> CResult<c_int> {
+    let func: Symbol<
+      '_,
+      unsafe extern "C" fn(handle: *const c_void, pstCvtParam: *mut MvPixelConvertParam) -> c_int,
+    > = auto_any_res_c!(self.lib().get(b"MV_CC_ConvertPixelType\0"));
+    CResult::Ok(func(self.handle, pst_cvt_param))
+  }
   ///  • MV_CC_SaveImageEx2() 比 MV_CC_SaveImageEx() 增加参数handle，为了保证与其他接口的统一。
   /// ```
   pub unsafe extern "C" fn save_image_ex2(
